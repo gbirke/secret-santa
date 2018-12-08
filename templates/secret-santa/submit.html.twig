@@ -1,23 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<h2>{{ donor.name }} - Bitte Beschenkte(n) eingeben</h2>
-    <form>
-        <ul>
-            {% for receiver in receivers %}
-                <li>
-                    <label><input type="radio" value="{{ receiver.id }}" name="receiver"> {{ receiver.name }} </label>
-                </li>
-            {% endfor %}
-            <li>
-                <label class="dont-know"><input type="radio" value="-1" name="receiver"> Ich weiß nicht mehr </label>
-            </li>
-        </ul>
-        <input type="submit" value="Senden">
-    </form>
+    <h2>Danke, {{ donor.name }}!</h2>
+
+    {% if donor.knowsReceiver %}
+        <p>Du musst nichts weiter tun, die Personen, die ihre Beschenkten nicht wussten, werden eine E-Mail-bekommen,
+            sobald die restlichen Personen ihre Daten eingegeben haben.</p>
+    {% else %}
+        <p>Sobald die restlichen <strong>{{ missingSubmissions }}</strong> Personen ihre Daten eingeben haben,
+            bekommest Du eine E-Mail mit Deinem neu ausgelosten Schenk-Ziel.</p>
+    {% endif %}
 {% endblock %}
 
 {% block title %}
-Beschenkte(n) eingeben
+Daten abgeschickt
 {% endblock %}
 

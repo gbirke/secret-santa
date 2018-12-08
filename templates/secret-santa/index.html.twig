@@ -5,12 +5,19 @@
 {% block body %}
 
     <h2>Personen</h2>
-    {% for donor in donors %}
-        {% if  %}
-        <div class="donor">
-            <span class="donor__name">{{ donor.name }}</span>
-            <span class="donor__submitted donor__submitted--{{ donor.hasSubmitted ? 'yes' : 'no' }}"></span>
-        </div>
-    {% endfor %}
+    <table class="donor">
+        <tr>
+            <th>Name</th>
+            <th>Daten gesendet?</th>
+        </tr>
+        {% for donor in donors %}
+            <tr>
+                <td class="donor__name">{{ donor.name }}</td>
+                <td class="donor__submitted donor__submitted--{{ donor.hasSubmitted ? 'yes' : 'no' }} ">
+                    {% if donor.hasSubmitted %} ja {% else %} nein {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
     <div> Es müssen noch <strong> {{ (donors|length) - submissions }} </strong> Personen ihre Beschenkten eingeben.</div>
 {% endblock %}

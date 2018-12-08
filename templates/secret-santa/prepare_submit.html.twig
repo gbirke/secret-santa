@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h2>{{ donor.name }} - Bitte Beschenkte(n) eingeben</h2>
+    <form action="{{ path('submit') }}" method="post">
+        <ul>
+            {% for receiver in receivers %}
+                <li>
+                    <label><input type="radio" value="{{ receiver.id }}" name="receiver"> {{ receiver.name }} </label>
+                </li>
+            {% endfor %}
+            <li>
+                <label class="dont-know"><input type="radio" value="-1" name="receiver"> Ich weiß nicht mehr </label>
+            </li>
+        </ul>
+        <input type="submit" value="Senden">
+        <input type="hidden" name="donor" value="{{ donor.id }}">
+    </form>
+{% endblock %}
+
+{% block title %}
+Beschenkte(n) eingeben
+{% endblock %}
+

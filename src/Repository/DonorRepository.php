@@ -27,6 +27,14 @@ class DonorRepository extends ServiceEntityRepository
     	return $qb->getQuery()->getSingleScalarResult();
 	}
 
+	public function countMissingSubmissions(): int {
+		$qb = $this->getEntityManager()->createQueryBuilder();
+		$qb->select( 'COUNT(donor.id)' )
+			->from( Donor::class, 'donor' )
+			->where( 'donor.submitted = 0' );
+		return $qb->getQuery()->getSingleScalarResult();
+	}
+
 
 	/**
 	 * @throws \Doctrine\ORM\NoResultException
