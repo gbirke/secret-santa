@@ -27,6 +27,32 @@ class DonorRepository extends ServiceEntityRepository
     	return $qb->getQuery()->getSingleScalarResult();
 	}
 
+
+	/**
+	 * @throws \Doctrine\ORM\NoResultException
+	 * @throws \Doctrine\ORM\NonUniqueResultException
+	 */
+	public function findOneByAccessCode( string $accessCode ): ?Donor
+	{
+		return $this->createQueryBuilder('d')
+			->andWhere('d.accessCode = :code')
+			->setParameter('code', $accessCode)
+			->getQuery()
+			->getSingleResult()
+			;
+	}
+
+	public function getReceiversForDonor( Donor $donor )
+	{
+		return $this->createQueryBuilder('d')
+			->andWhere('d.id != :id')
+			->setParameter('id', $donor->getId())
+			->orderBy('d.name', 'ASC')
+			->getQuery()
+			->getResult()
+			;
+	}
+
     // /**
     //  * @return Donor[] Returns an array of Donor objects
     //  */

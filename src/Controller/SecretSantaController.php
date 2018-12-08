@@ -2,7 +2,10 @@
 namespace App\Controller;
 
 use App\Entity\Donor;
+use Doctrine\ORM\NoResultException;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 
 class SecretSantaController extends AbstractController
 {
@@ -16,6 +19,22 @@ class SecretSantaController extends AbstractController
 			'submissions' => $repo->countSubmissions()
 		]);
     }
+
+    public function prepareSubmission(string $accessCode) {
+		$repo = $this->getDoctrine()->getRepository( Donor::class );
+		try {
+			$donor = $repo->findOneByAccessCode( $accessCode );
+		} catch( NoResultException $e ) {
+    		return new Response( 'Account nicht gefunden', Response::HTTP_UNAUTHORIZED );
+		}
+		if ( $donor->hasSubmitted() ) {
+			return $this->redirectToRoute( 'index' );
+		}
+		return $this->render( 'secret-santa/submit.html.twig', [
+			'donor' => $donor,
+			'receivers' => $repo->getReceiversForDonor( $donor )
+		] );
+	}
 
     public function storeSubmission() {
     	//TODO

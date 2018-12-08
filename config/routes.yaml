@@ -1,3 +1,7 @@
+prepare:
+    path: /p/{accessCode}
+    controller: App\Controller\SecretSantaController::prepareSubmission
+
 index:
     path: /
     controller: App\Controller\SecretSantaController::index

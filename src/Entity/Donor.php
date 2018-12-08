@@ -36,6 +36,11 @@ class Donor
      */
     private $knowsReceiver;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $accessCode;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -85,6 +90,18 @@ class Donor
     public function setKnowsReceiver(bool $knowsReceiver): self
     {
         $this->knowsReceiver = $knowsReceiver;
+
+        return $this;
+    }
+
+    public function getAccessCode(): ?string
+    {
+        return $this->accessCode;
+    }
+
+    public function setAccessCode(string $accessCode): self
+    {
+        $this->accessCode = $accessCode;
 
         return $this;
     }
