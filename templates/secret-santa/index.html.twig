@@ -1,5 +1,15 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Wichteln bei Maskos - Übersicht{% endblock %}
+
 {% block body %}
-Anzahl Schenker: {{ people|length }}
+
+    <h2>Personen</h2>
+    {% for donor in donors %}
+        <div class="donor">
+            <span class="donor__name">{{ donor.name }}</span>
+            <span class="donor__submitted donor__submitted--{{ donor.hasSubmitted ? 'yes' : 'no' }}"></span>
+        </div>
+    {% endfor %}
+    <div> Es müssen noch <strong> {{ (donors|length) - submissions }} </strong> Personen ihre Beschenkten eingeben.</div>
 {% endblock %}

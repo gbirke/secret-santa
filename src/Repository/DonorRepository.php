@@ -19,6 +19,14 @@ class DonorRepository extends ServiceEntityRepository
         parent::__construct($registry, Donor::class);
     }
 
+    public function countSubmissions(): int {
+    	$qb = $this->getEntityManager()->createQueryBuilder();
+    	$qb->select( 'COUNT(donor.id)' )
+			->from( Donor::class, 'donor' )
+			->where( 'donor.submitted != 0' );
+    	return $qb->getQuery()->getSingleScalarResult();
+	}
+
     // /**
     //  * @return Donor[] Returns an array of Donor objects
     //  */

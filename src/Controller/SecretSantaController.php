@@ -1,21 +1,19 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\Donor;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class SecretSantaController extends AbstractController
 {
     public function index()
     {
-    	// TODO Read from DB
-        $people = [];
-
-        // TODO Read from DB
-		$submissions = [];
+    	$repo = $this->getDoctrine()->getRepository( Donor::class );
+        $donors = $repo->findAll();
 
         return $this->render( 'secret-santa/index.html.twig', [
-        	'people' => $people,
-			'submissions' => $submissions
+        	'donors' => $donors,
+			'submissions' => $repo->countSubmissions()
 		]);
     }
 
